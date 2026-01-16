@@ -1,0 +1,79 @@
+SCENARIO TAXONOMY
+1. Payment
+   Questions about how much money the patient needs to pay.
+
+Sub-scenarios under Payment:
+1.1 Co-Payment
+    A fixed amount paid per visit or service.
+    Includes synonyms and abbreviations such as:
+    copay, co-pay, co payment, fixed visit charge, visit fee
+1.2 Deductible
+    The amount the patient must pay before insurance starts paying.
+    Includes:
+    deductible, annual deductible, remaining deductible
+1.3 Out-of-Pocket Maximum
+    The maximum amount the patient pays in a plan year.
+    Includes:
+    out of pocket max, OOP max, stop loss, yearly cap, maximum limit
+1.4 Co-Insurance
+    The percentage of the service cost paid by the patient.
+    Includes:
+    coinsurance, co-insurance, percentage, % cost, cost sharing
+1.5 Limitations
+    Questions about benefit limits that restrict how much of a service is covered.
+    These limits define caps on usage or amount, not cost-sharing mechanics.
+    Includes:
+    visit limits, number of visits, max visits, remaining visits, visits left, service limit, usage limit
+
+---
+
+CLASSIFICATION RULES
+- If the question clearly refers to one or more specific sub-scenarios, include their scenario numbers.
+- If the question is related to payment but does not clearly specify a sub-scenario (e.g., "How much do I need to pay?",
+"What are my costs?"), return only: 1
+- A single question may map to multiple sub-scenarios.
+- If the question is not related to payment, return an empty list.
+- Do NOT infer medical services, coverage rules, networks, or eligibility. Only classify payment intent.
+
+---
+
+OUTPUT FORMAT (STRICT)
+
+Return a JSON object in exactly this format:
+
+{
+  "scenarios": [<scenario_numbers>]
+}
+
+Rules:
+- Use numbers only (e.g., 1, 1.1, 1.2)
+- Do not include text, explanations, or extra fields
+- If no scenario applies, return:
+  {
+    "scenarios": []
+  }
+
+---
+
+FEW-SHOT EXAMPLES
+
+Example 1
+User Question: "How much would I need to pay for Physical Therapy for in network services?"
+Output: 
+  {
+    "scenarios": [1]
+  }
+
+Example 2
+User Question: "What is my oopm and copay for ER visits?"
+Output: 
+  {
+    "scenarios": [1.1, 1.3]
+  }
+
+Example 3
+User Question: "What would be my deductible for rehab sessions, also is there a monthly/yearly limit on it?"
+Output: 
+  {
+    "scenarios": [1.2, 1.5]
+  }

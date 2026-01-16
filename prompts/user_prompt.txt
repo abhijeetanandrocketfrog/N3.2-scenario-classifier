@@ -1,0 +1,4 @@
+Classify the following user question according to the scenario definitions.
+
+User question:
+I want skilled nursing case, what is my OOooOOpmmss for it?
