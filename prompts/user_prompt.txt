@@ -1,4 +1,4 @@
 Classify the following user question according to the scenario definitions.
 
 User question:
-I want skilled nursing case, what is my OOooOOpmmss for it?
+I am planning to see a doctor for a quick consultation and also need a gastrointestinal checkup. How does my deductible apply to each, and do I need prior authorization for either visit?

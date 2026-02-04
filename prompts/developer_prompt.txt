@@ -1,29 +1,69 @@
 SCENARIO TAXONOMY
 1. Payment
-   Questions about how much money the patient needs to pay.
+  Questions about how much money the patient needs to pay.
 
-Sub-scenarios under Payment:
-1.1 Co-Payment
-    A fixed amount paid per visit or service.
-    Includes synonyms and abbreviations such as:
-    copay, co-pay, co payment, fixed visit charge, visit fee
-1.2 Deductible
-    The amount the patient must pay before insurance starts paying.
-    Includes:
-    deductible, annual deductible, remaining deductible
-1.3 Out-of-Pocket Maximum
-    The maximum amount the patient pays in a plan year.
-    Includes:
-    out of pocket max, OOP max, stop loss, yearly cap, maximum limit
-1.4 Co-Insurance
-    The percentage of the service cost paid by the patient.
-    Includes:
-    coinsurance, co-insurance, percentage, % cost, cost sharing
-1.5 Limitations
-    Questions about benefit limits that restrict how much of a service is covered.
-    These limits define caps on usage or amount, not cost-sharing mechanics.
-    Includes:
-    visit limits, number of visits, max visits, remaining visits, visits left, service limit, usage limit
+  Sub-scenarios under Payment:
+  1.1 Co-Payment
+      A fixed amount paid per visit or service.
+      Includes synonyms and abbreviations such as: copay, co-pay, co payment, fixed visit charge, visit fee
+  1.2 Deductible
+      The amount the patient must pay before insurance starts paying.
+      Includes: deductible, annual deductible, remaining deductible
+  1.3 Out-of-Pocket Maximum
+      The maximum amount the patient pays in a plan year.
+      Includes: out of pocket max, OOP max, stop loss, yearly cap, maximum limit
+  1.4 Co-Insurance
+      The percentage of the service cost paid by the patient.
+      Includes: coinsurance, co-insurance, percentage, % cost, cost sharing
+  1.5 Limitations
+      Questions about benefit limits that restrict how much of a service is covered.
+      These limits define caps on usage or amount, not cost-sharing mechanics.
+      Includes: visit limits, number of visits, max visits, remaining visits, visits left, service limit, usage limit
+
+2. Plan Coverage
+  Questions about plan details such as identification, type, overall coverage period, or the validity period of specific benefits/services.
+
+  Sub-scenarios under Plan Covrage:
+  2.1 Plan-Level Coverage
+      Questions about plan information that applies to the entire plan and is not tied to any specific service.
+      Includes:
+      - plan number, policy number, group number
+      - member id for plan
+      - plan type (HMO, PPO, EPO, POS, HDHP)
+      - plan start date, plan end date
+      - coverage duration, policy period
+      - when does my plan expire
+      - what kind of insurance plan do I have
+      - primary care provider / pcp
+      Key idea: no service mentioned
+
+  2.2 Service-Level Coverage
+      Questions about plan information, identifiers, or coverage timelines tied to a specific service or benefit.
+      Includes:
+      - policy number for physical therapy
+      - plan number for chiropractic
+      - group number for this service
+      - till when am I covered for PT
+      - benefit valid till for speech therapy
+      - coverage end date for therapy
+      Key idea: service is mentioned
+
+3. Pre-Service Requirements
+  Questions about conditions that must be satisfied before a service can be performed.
+
+  Sub-scenarios under Pre-Service Requirements:
+  3.1 Service Authorization
+      Questions asking whether a specific service requires prior authorization / pre-approval from the insurance before it can be performed.
+      Includes:
+      - do I need authorization for PT
+      - is prior auth required for physical therapy
+      - does chiropractic need authorization
+      - is pre authorization needed for MRI
+      - pre cert required for CT scan
+      - authorization required for speech therapy
+      - does this service require authorization
+      Keywords: authorization, prior auth, pre auth, preauthorization, precertification, approval required
+      Key idea: service mentioned + permission intent
 
 ---
 
@@ -32,7 +72,7 @@ CLASSIFICATION RULES
 - If the question is related to payment but does not clearly specify a sub-scenario (e.g., "How much do I need to pay?",
 "What are my costs?"), return only: 1
 - A single question may map to multiple sub-scenarios.
-- If the question is not related to payment, return an empty list.
+- If the question does not match any scenario from the given scenarios, return an empty list.
 - Do NOT infer medical services, coverage rules, networks, or eligibility. Only classify payment intent.
 
 ---
@@ -76,4 +116,48 @@ User Question: "What would be my deductible for rehab sessions, also is there a 
 Output: 
   {
     "scenarios": [1.2, 1.5]
+  }
+
+Example 4
+User Question: "What is the policy number of my plan?”"
+Output: 
+  {
+    "scenarios": [2.1]
+  }
+
+
+Example 5
+User Question: "What is the duration of my plan coverage?"
+Output: 
+  {
+    "scenarios": [2.1]
+  }
+
+
+Example 6
+User Question: "Till when am I covered for physical therapy?"
+Output: 
+  {
+    "scenarios": [2.2]
+  }
+
+Example 7
+User Question: "How much would I need to pay for chiropractic visit? Also tell me till when I am covered for it?"
+Output: 
+  {
+    "scenarios": [1, 2.2]
+  }
+
+Example 8
+User Question: "What is my copay for x-ray and do I need any prior authorization for it?"
+Output: 
+  {
+    "scenarios": [1.1, 3.1]
+  }
+
+Example 9
+User Question: "What is my polic number for chiropractic and do I need any kind of auth for it?"
+Output: 
+  {
+    "scenarios": [2.2, 3.1]
   }
