@@ -1,79 +1,99 @@
 SCENARIO TAXONOMY
-1. Payment
-  Questions about how much money the patient needs to pay.
+Scenaio ID: 1
+Scenaio Name: PAYMENT - Questions about how much money the patient needs to pay.
 
-  Sub-scenarios under Payment:
-  1.1 Co-Payment
-      A fixed amount paid per visit or service.
-      Includes synonyms and abbreviations such as: copay, co-pay, co payment, fixed visit charge, visit fee
-  1.2 Deductible
-      The amount the patient must pay before insurance starts paying.
-      Includes: deductible, annual deductible, remaining deductible
-  1.3 Out-of-Pocket Maximum
-      The maximum amount the patient pays in a plan year.
-      Includes: out of pocket max, OOP max, stop loss, yearly cap, maximum limit
-  1.4 Co-Insurance
-      The percentage of the service cost paid by the patient.
-      Includes: coinsurance, co-insurance, percentage, % cost, cost sharing
-  1.5 Limitations
-      Questions about benefit limits that restrict how much of a service is covered.
-      These limits define caps on usage or amount, not cost-sharing mechanics.
-      Includes: visit limits, number of visits, max visits, remaining visits, visits left, service limit, usage limit
+  Sub-scenarios under PAYMENT:
+  
+  Sub-scenaio ID: 1.1
+  Sub-scenaio Name: Co-Payment
+    A fixed amount paid per visit or service.
+    Includes synonyms and abbreviations such as: copay, co-pay, co payment, fixed visit charge, visit fee
+  
+  Sub-scenaio ID: 1.2
+  Sub-scenaio Name: Deductible
+    The amount the patient must pay before insurance starts paying.
+    Includes: deductible, annual deductible, remaining deductible
 
-2. Plan Coverage
-  Questions about plan details such as identification, type, overall coverage period, or the validity period of specific benefits/services.
+  Sub-scenaio ID: 1.3
+  Sub-scenaio Name: Out-of-Pocket Maximum
+    The maximum amount the patient pays in a plan year.
+    Includes: out of pocket max, OOP max, stop loss, yearly cap, maximum limit
+  
+  Sub-scenaio ID: 1.4
+  Sub-scenaio Name: Co-Insurance
+    The percentage of the service cost paid by the patient.
+    Includes: coinsurance, co-insurance, percentage, % cost, cost sharing
 
-  Sub-scenarios under Plan Covrage:
-  2.1 Plan-Level Coverage
-      Questions about plan information that applies to the entire plan and is not tied to any specific service.
-      Includes:
-      - plan number, policy number, group number
-      - member id for plan
-      - plan type (HMO, PPO, EPO, POS, HDHP)
-      - plan start date, plan end date
-      - coverage duration, policy period
-      - when does my plan expire
-      - what kind of insurance plan do I have
-      - primary care provider / pcp
-      Key idea: no service mentioned
+  Sub-scenaio ID: 1.5
+  Sub-scenaio Name: Limitations
+    Questions about benefit limits that restrict how much of a service is covered.
+    These limits define caps on usage or amount, not cost-sharing mechanics.
+    Includes: visit limits, number of visits, max visits, remaining visits, visits left, service limit, usage limit
 
-  2.2 Service-Level Coverage
-      Questions about plan information, identifiers, or coverage timelines tied to a specific service or benefit.
-      Includes:
-      - policy number for physical therapy
-      - plan number for chiropractic
-      - group number for this service
-      - till when am I covered for PT
-      - benefit valid till for speech therapy
-      - coverage end date for therapy
-      Key idea: service is mentioned
 
-3. Pre-Service Requirements
-  Questions about conditions that must be satisfied before a service can be performed.
+Scenaio ID: 2
+Scenaio Name: COVERAGE - Questions about plan details such as identification, type, overall coverage period, or the validity period of specific benefits/services.
 
-  Sub-scenarios under Pre-Service Requirements:
-  3.1 Service Authorization
-      Questions asking whether a specific service requires prior authorization / pre-approval from the insurance before it can be performed.
-      Includes:
-      - do I need authorization for PT
-      - is prior auth required for physical therapy
-      - does chiropractic need authorization
-      - is pre authorization needed for MRI
-      - pre cert required for CT scan
-      - authorization required for speech therapy
-      - does this service require authorization
-      Keywords: authorization, prior auth, pre auth, preauthorization, precertification, approval required
-      Key idea: service mentioned + permission intent
+  Sub-scenarios under COVERAGE:
+
+  Sub-scenaio ID: 2.1
+  Sub-scenaio Name: Plan-Level Coverage
+    Questions about plan information that applies to the entire plan and is not tied to any specific service.
+    Includes:
+    - plan number, policy number, group number
+    - member id for plan
+    - plan type (HMO, PPO, EPO, POS, HDHP)
+    - plan start date, plan end date
+    - coverage duration, policy period
+    - when does my plan expire
+    - what kind of insurance plan do I have
+    - primary care provider / pcp
+    Key idea: no service mentioned
+
+  Sub-scenaio ID: 2.2
+  Sub-scenaio Name: Service-Level Coverage
+    Questions about plan information, identifiers, or coverage timelines tied to a specific service or benefit.
+    Includes:
+    - policy number for physical therapy
+    - plan number for chiropractic
+    - group number for this service
+    - till when am I covered for PT
+    - benefit valid till for speech therapy
+    - coverage end date for therapy
+    Key idea: service is mentioned
+
+Scenaio ID: 3
+Scenaio Name: PRE-SERVICE REQUIREMENTS - Questions about conditions that must be satisfied before a service can be performed.
+
+  Sub-scenarios under PRE-SERVICE REQUIREMENTS:
+
+  Sub-scenaio ID: 3.1
+  Sub-scenaio Name: Service-level Prior Authorization
+    Questions asking whether a specific service requires prior authorization / pre-approval from the insurance before it can be performed.
+    Includes:
+    - do I need authorization for PT
+    - is prior auth required for physical therapy
+    - does chiropractic need authorization
+    - is pre authorization needed for MRI
+    - pre cert required for CT scan
+    - authorization required for speech therapy
+    - does this service require authorization
+    Keywords: authorization, prior auth, pre auth, preauthorization, precertification, approval required
+    Key idea: service mentioned + permission intent
+
+Scenaio ID: 0
+Scenaio Name: MISCELLANEOUS
+  Questions that do not fit into any of the above scenarios.
+  Key idea:
+  Used only when the question cannot be classified under Payment, Coverage, or Pre-Service Requirements.
 
 ---
 
 CLASSIFICATION RULES
-- If the question clearly refers to one or more specific sub-scenarios, include their scenario numbers.
-- If the question is related to payment but does not clearly specify a sub-scenario (e.g., "How much do I need to pay?",
-"What are my costs?"), return only: 1
-- A single question may map to multiple sub-scenarios.
-- If the question does not match any scenario from the given scenarios, return an empty list.
-- Do NOT infer medical services, coverage rules, networks, or eligibility. Only classify payment intent.
+  - If the question clearly refers to one or more specific sub-scenarios, include their scenario numbers.
+  - A single question may map to multiple scenarios or sub-scenarios.
+  - Do NOT infer medical services, coverage rules, networks, or eligibility. Only classify the question based on the intent categories defined in the scenario taxonomy.
+  - The scenario output must never be empty. If the question cannot be classified into any of the defined scenarios, you must return: [0].
 
 ---
 
@@ -86,12 +106,8 @@ Return a JSON object in exactly this format:
 }
 
 Rules:
-- Use numbers only (e.g., 1, 1.1, 1.2)
+- Use numbers only (e.g., 1, 1.1, 2.2, 3.1, 0)
 - Do not include text, explanations, or extra fields
-- If no scenario applies, return:
-  {
-    "scenarios": []
-  }
 
 ---
 

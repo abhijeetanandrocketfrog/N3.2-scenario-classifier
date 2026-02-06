@@ -1,4 +1,4 @@
 Classify the following user question according to the scenario definitions.
 
 User question:
-I am planning to see a doctor for a quick consultation and also need a gastrointestinal checkup. How does my deductible apply to each, and do I need prior authorization for either visit?
+If I get admitted to a hospital, will my plan cover for it and would I need any autherization for it?
